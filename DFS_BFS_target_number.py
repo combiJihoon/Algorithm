@@ -6,24 +6,18 @@
 from collections import deque
 
 def solution(numbers, target):
-	q = deque()
-	
-	result = 0
-	answer = 0
-	for i in range(len(numbers)) :
-		q.append((i, -numbers[i]))
-		while q :
-			index, now = q.popleft()
-			result += now
-			if result == target :
-				answer += 1
-				break
-			if index + 1 < len(numbers) :
-				q.append((index+1, numbers[index+1]))
-	return answer
+    q = deque()
+    q.append((0, 0))
+    answer = 0
 
-numbers = [1, 1, 1, 1, 1]
-target = 3
+    while q :
+        curr_sum, index = q.popleft()
+        if index == len(numbers) :
+            if curr_sum == target :
+                answer += 1
+        else :
+            new_num = numbers[index]
+            q.append((curr_sum + new_num, index+1))
+            q.append((curr_sum - new_num, index+1))
+    return answer
 
-print(solution(numbers, target))
-    
